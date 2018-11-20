@@ -16,12 +16,13 @@ Note : quelque soit votre OS, vous pouvez accédez à votre fichier de config vi
 * **surid** = ```"!git submodule update --recursive --init  && git clean -dff"```  
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update all the modules and their submodules, clone the new ones if needed, delete the directories of the modules that aren’t tracked anymore
 * **fa** = ```fetch --all```  
+* **st** = ```status```
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fetch all the remotes!
 * **ck** = ```checkout```
+* **search** = "!git grep \"$1\" $(git rev-list --all) #" # Search inside all the commits of all the repo for the parameter (as a regex)
+* **fixup** = "!git add -A && git commit --fixup HEAD && git config --global core.editor 'true git rebase --autosquash -i' && git rebase -i --autosquash HEAD~2 && git config --global core.editor 'subl -n -w'" # Fixup the last commit with actual staged & unstaged changes
 * **purge** = ```"!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"```  
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete all the local branches that are merged with the master. It won’t delete branches starting with master or develop (or any other stuff you want to add)
-* **ckm** = ```"!git checkout master && git pull mainRepo master && git push origin master"```  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Switch to local master branch, update it, push it on your fork’s master (I always keep my master clean and up to date, this might not be the case for you)
 * **rhard** = ```reset --hard```  
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Carefull with this ! (if you *do* screw up, don’t panic, *git reflog* is there for you https://git-scm.com/docs/git-reflog)
 * **dtag** = ```describe --tag```  
@@ -34,10 +35,6 @@ Note : quelque soit votre OS, vous pouvez accédez à votre fichier de config vi
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Restore current (local) branch to set SHA1
 * **test** = ```"!git branch -D test && git checkout -b test && git pull origin $1"```  
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Useful for PR validation, starts a fresh new “test” branch from the current branch and pulls the branch you wish to test like *git test ady_supa_dupa_feature*
-* **pullc** = ```"!f() { OUTPUT="$(git rev-parse --abbrev-ref HEAD)"; git pull origin $OUTPUT; }; f"```  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To pull the branch you’re using from the remote ‘origin’ (for example if you’re on the branch ‘test’ then ‘git pullc’ does ‘git pull origin test’)
-* **pushc** = ```"!f() { OUTPUT="$(git rev-parse --abbrev-ref HEAD)"; git push origin $OUTPUT; }; f"```  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To push the branch you’re using to the remote ‘origin’ (for example if you’re on the branch ‘test’ then ‘git pushc’ does ‘git push origin test’)  
 # Advanced
 **/!\ This is advanced git usage and it can lead to data loss. Use it at your own risks ! /!\\**
 ### **1. Rebase like a pro : Chopper des nouveaux commits apparu sur la master pendant le développement, sans commit de merge / pull**
